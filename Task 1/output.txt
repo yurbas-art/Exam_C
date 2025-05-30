@@ -1,0 +1,5 @@
+Summa: 953
+Min: 1
+Max: 96
+Kolichesto chetnyh: 8
+Kolichesto nechetnyh: 11
