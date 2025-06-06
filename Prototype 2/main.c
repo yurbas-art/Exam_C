@@ -2,6 +2,15 @@
 #include <stdlib.h>
 #include <time.h>
 
+/*
+ * Prototype 2
+ * ------------
+ * Сначала создаются две матрицы случайных чисел и записываются
+ * в файл input.txt. Далее матрицы читаются обратно, выполняется
+ * их умножение и сложение, а результаты сохраняются в output.txt.
+ * В конце выводится время работы программы.
+ */
+
 //•Создать файл input.txt в который поместить 2 случайные матрицы размера,
 // заданного пользователем с консоли. Закрыть файл. Отчистить массивы.
 // Открыть input.txt файл и прочитать матрицы, произвести их перемножение и
@@ -9,6 +18,7 @@
 // замерить время работы программы и вывести на экран.
 
 
+// заполняет переданную матрицу случайными числами
 void generate_random_matrix(int** matrix, int rows, int cols){
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < cols; j++){
@@ -17,6 +27,7 @@ void generate_random_matrix(int** matrix, int rows, int cols){
     }
 }
 
+// перемножение двух матриц
 int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int cols2, int rows2){
     if (cols1 != rows2){
         return NULL;
@@ -34,6 +45,7 @@ int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int 
     return result;
 }
 
+// сложение двух матриц одинакового размера
 int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols){
     int** result = (int**)malloc(rows * sizeof(int*));
     for (int i = 0; i < rows; i++){
@@ -45,6 +57,7 @@ int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols){
     return result;
 }
 
+// освобождение памяти, выделенной под матрицу
 void free_matrix(int** matrix, int rows){
     for (int i = 0; i < rows; i++){
         free(matrix[i]);
@@ -52,6 +65,7 @@ void free_matrix(int** matrix, int rows){
     free(matrix);
 }
 
+// запись матрицы в файл
 void write_files(FILE *input_file, int** matrix, int rows, int cols){
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < cols; j++){
@@ -61,6 +75,7 @@ void write_files(FILE *input_file, int** matrix, int rows, int cols){
     }
 }
 
+// чтение матрицы из файла
 int** read_matrix(FILE *input_file, int rows, int cols){
     int** matrix = (int**)malloc(rows * sizeof(int*));
     for (int i = 0; i < rows; i++){
@@ -72,6 +87,8 @@ int** read_matrix(FILE *input_file, int rows, int cols){
     return matrix;
 }
 
+// точка входа: запрашивает размеры матриц, выполняет
+// запись/чтение и выводит результаты операций
 int main(){
     clock_t start = clock();
     srand(time(NULL));

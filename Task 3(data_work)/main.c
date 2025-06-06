@@ -2,6 +2,14 @@
 #include <stdlib.h>
 #include <time.h>
 
+/*
+ * Task 3
+ * ------
+ * Считывает дату из файла data.txt и выводит,
+ * сколько дней осталось до неё (или прошло с неё).
+ */
+
+// точка входа программы
 int main() {
     int day, month, year;  // Теперь порядок day, month, year
     FILE *file_data = fopen("data.txt", "r");

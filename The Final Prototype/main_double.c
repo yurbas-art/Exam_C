@@ -3,8 +3,17 @@
 #include <stdlib.h>
 #include <windows.h>
 
-// вариант программы с двойной точностью: реализация сложения, вычитания и умножения матриц
+/*
+ * The Final Prototype (double)
+ * ---------------------------
+ * Аналог программы main.c, но все вычисления
+ * выполняются с типом double.
+ */
 
+// вариант программы с двойной точностью:
+// реализация сложения, вычитания и умножения матриц
+
+// записывает две матрицы double в input.txt
 void generate_file_matrix(int rows, int cols) {
     FILE *input_file = fopen("input.txt", "w");
     if (input_file == NULL) {
@@ -28,6 +37,7 @@ void generate_file_matrix(int rows, int cols) {
     fclose(input_file);
 }
 
+// умножение матриц с элементами double
 double** multiply_matrices(double** matrix1, double** matrix2, int cols1, int rows1, int cols2, int rows2) {
     if (cols1 != rows2) {
         return NULL;
@@ -57,6 +67,7 @@ double** multiply_matrices(double** matrix1, double** matrix2, int cols1, int ro
     return result;
 }
 
+// сложение матриц double
 double** plus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
     double** result = (double**)malloc(rows * sizeof(double*));
     if (result == NULL) {
@@ -80,6 +91,7 @@ double** plus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
     return result;
 }
 
+// разность матриц double
 double** minus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
     double** result = (double**)malloc(rows * sizeof(double*));
     if (result == NULL) {
@@ -103,6 +115,7 @@ double** minus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
     return result;
 }
 
+// печать матрицы в файл
 void write_matrix(FILE* output_file, double** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -112,6 +125,7 @@ void write_matrix(FILE* output_file, double** matrix, int rows, int cols) {
     }
 }
 
+// освобождение памяти матрицы
 void free_matrix(double** matrix, int rows) {
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
@@ -119,6 +133,7 @@ void free_matrix(double** matrix, int rows) {
     free(matrix);
 }
 
+// чтение матрицы из файла
 double** read_matrix(FILE* input_file, int rows, int cols) {
     double** matrix = (double**)malloc(rows * sizeof(double*));
     if (matrix == NULL) {
@@ -149,6 +164,7 @@ double** read_matrix(FILE* input_file, int rows, int cols) {
     return matrix;
 }
 
+// демонстрация работы с матрицами double
 int main() {
     system("chcp 65001 > nul");
 

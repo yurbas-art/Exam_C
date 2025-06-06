@@ -3,8 +3,17 @@
 #include <stdlib.h>
 #include <windows.h>
 
-// в этом файле реализованы функции сложения, вычитания и умножения матриц
+/*
+ * The Final Prototype
+ * -------------------
+ * Итоговая программа с целочисленными матричными операциями:
+ * генерация двух матриц, их чтение из файла, выполнение
+ * сложения, вычитания и умножения с выводом результата.
+ */
 
+// набор функций для генерации и операций над матрицами
+
+// записывает две случайные матрицы в input.txt
 void generate_file_matrix(int rows, int cols) {
     FILE *input_file = fopen("input.txt", "w");
     if (input_file == NULL) {
@@ -28,6 +37,7 @@ void generate_file_matrix(int rows, int cols) {
     fclose(input_file);
 }
 
+// умножение двух целочисленных матриц
 int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int cols2, int rows2) {
     if (cols1 != rows2) {
         return NULL;
@@ -57,6 +67,7 @@ int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int 
     return result;
 }
 
+// сумма двух матриц
 int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     int** result = (int**)malloc(rows * sizeof(int*));
     if (result == NULL) {
@@ -80,6 +91,7 @@ int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
+// разность двух матриц
 int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     int** result = (int**)malloc(rows * sizeof(int*));
     if (result == NULL) {
@@ -103,6 +115,7 @@ int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
+// печать матрицы в файл
 void write_matrix(FILE* output_file, int** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -112,6 +125,7 @@ void write_matrix(FILE* output_file, int** matrix, int rows, int cols) {
     }
 }
 
+// освобождение памяти матрицы
 void free_matrix(int** matrix, int rows) {
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
@@ -119,6 +133,7 @@ void free_matrix(int** matrix, int rows) {
     free(matrix);
 }
 
+// чтение матрицы из файла
 int** read_matrix(FILE* input_file, int rows, int cols) {
     int** matrix = (int**)malloc(rows * sizeof(int*));
     if (matrix == NULL) {
@@ -149,6 +164,7 @@ int** read_matrix(FILE* input_file, int rows, int cols) {
     return matrix;
 }
 
+// демонстрация работы с целочисленными матрицами
 int main() {
     system("chcp 65001 > nul");
 
