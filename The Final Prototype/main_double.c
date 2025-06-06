@@ -4,14 +4,13 @@
 #include <windows.h>
 
 /*
- * main.c — базовый вариант программы работы с матрицами.
- * Генерирует две матрицы целых чисел, выполняет операции
- * сложения, вычитания и умножения и записывает результаты
- * в файл output.txt.
+ * main_double.c — версия программы с матрицами типа double.
+ * Генерирует две матрицы вещественных чисел и выполняет
+ * их сложение, вычитание и умножение.
  */
 
-// Генерирует файл input.txt, содержащий две случайные матрицы
-// Параметры rows и cols задают размерность этих матриц
+// Создаёт файл input.txt со случайными вещественными числами
+// Параметры rows и cols задают размер каждой матрицы
 
 void generate_file_matrix(int rows, int cols) {
     FILE *input_file = fopen("input.txt", "w");
@@ -24,7 +23,7 @@ void generate_file_matrix(int rows, int cols) {
     for (int k = 0; k < 2; k++) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                fprintf(input_file, "%d ", rand() % 10 + 1);
+                fprintf(input_file, "%lf ", (double)(rand() % 10 + 1));
             }
             fprintf(input_file, "\n");
         }
@@ -36,19 +35,19 @@ void generate_file_matrix(int rows, int cols) {
     fclose(input_file);
 }
 
-// Перемножает matrix1 (rows1 x cols1) и matrix2 (rows2 x cols2)
-// Возвращает новую матрицу размера rows1 x cols2 или NULL при несовместимости
-int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int cols2, int rows2) {
+// Перемножает две матрицы типа double
+// Возвращает новую матрицу или NULL, если размеры несовместимы
+double** multiply_matrices(double** matrix1, double** matrix2, int cols1, int rows1, int cols2, int rows2) {
     if (cols1 != rows2) {
         return NULL;
     }
-    int** result = (int**)malloc(rows1 * sizeof(int*));
+    double** result = (double**)malloc(rows1 * sizeof(double*));
     if (result == NULL) {
         printf("Ошибка: не удалось выделить память под результат умножения.\n");
         exit(1);
     }
     for (int i = 0; i < rows1; i++) {
-        result[i] = (int*)malloc(cols2 * sizeof(int));
+        result[i] = (double*)malloc(cols2 * sizeof(double));
         if (result[i] == NULL) {
             printf("Ошибка: не удалось выделить память под строку результата [%d].\n", i);
             for (int k = 0; k < i; k++) {
@@ -67,16 +66,15 @@ int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int 
     return result;
 }
 
-// Сложение двух матриц одинакового размера
-// Возвращает новую матрицу с суммой
-int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
-    int** result = (int**)malloc(rows * sizeof(int*));
+// Сложение матриц типа double одинакового размера
+double** plus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
+    double** result = (double**)malloc(rows * sizeof(double*));
     if (result == NULL) {
         printf("Ошибка: не удалось выделить память под результат сложения.\n");
         exit(1);
     }
     for (int i = 0; i < rows; i++) {
-        result[i] = (int*)malloc(cols * sizeof(int));
+        result[i] = (double*)malloc(cols * sizeof(double));
         if (result[i] == NULL) {
             printf("Ошибка: не удалось выделить память под строку результата [%d].\n", i);
             for (int k = 0; k < i; k++) {
@@ -92,16 +90,15 @@ int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
-// Вычитание матриц одинакового размера
-// Возвращает matrix1 - matrix2
-int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
-    int** result = (int**)malloc(rows * sizeof(int*));
+// Вычитание matrix2 из matrix1 для вещественных матриц
+double** minus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
+    double** result = (double**)malloc(rows * sizeof(double*));
     if (result == NULL) {
         printf("Ошибка: не удалось выделить память под результат вычитания.\n");
         exit(1);
     }
     for (int i = 0; i < rows; i++) {
-        result[i] = (int*)malloc(cols * sizeof(int));
+        result[i] = (double*)malloc(cols * sizeof(double));
         if (result[i] == NULL) {
             printf("Ошибка: не удалось выделить память под строку результата [%d].\n", i);
             for (int k = 0; k < i; k++) {
@@ -117,33 +114,33 @@ int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
-// Записывает матрицу в файл построчно
-void write_matrix(FILE* output_file, int** matrix, int rows, int cols) {
+// Записывает матрицу типа double в файл
+void write_matrix(FILE* output_file, double** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            fprintf(output_file, "%d ", matrix[i][j]);
+            fprintf(output_file, "%lf ", matrix[i][j]);
         }
         fprintf(output_file, "\n");
     }
 }
 
 // Освобождает память, выделенную под матрицу
-void free_matrix(int** matrix, int rows) {
+void free_matrix(double** matrix, int rows) {
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
     }
     free(matrix);
 }
 
-// Считывает из файла матрицу заданного размера
-int** read_matrix(FILE* input_file, int rows, int cols) {
-    int** matrix = (int**)malloc(rows * sizeof(int*));
+// Считывает матрицу из файла
+double** read_matrix(FILE* input_file, int rows, int cols) {
+    double** matrix = (double**)malloc(rows * sizeof(double*));
     if (matrix == NULL) {
         printf("Ошибка: не удалось выделить память под указатели строк.\n");
         exit(1);
     }
     for (int i = 0; i < rows; i++) {
-        matrix[i] = (int*)malloc(cols * sizeof(int));
+        matrix[i] = (double*)malloc(cols * sizeof(double));
         if (matrix[i] == NULL) {
             printf("Ошибка: не удалось выделить память под row %d.\n", i);
             for (int k = 0; k < i; k++) {
@@ -153,7 +150,7 @@ int** read_matrix(FILE* input_file, int rows, int cols) {
             exit(1);
         }
         for (int j = 0; j < cols; j++) {
-            if (fscanf(input_file, "%d", &matrix[i][j]) != 1) {
+            if (fscanf(input_file, "%lf", &matrix[i][j]) != 1) {
                 printf("Ошибка: недостаточно чисел в файле при чтении элемента [%d][%d].\n", i, j);
                 for (int k = 0; k <= i; k++) {
                     free(matrix[k]);
@@ -166,7 +163,7 @@ int** read_matrix(FILE* input_file, int rows, int cols) {
     return matrix;
 }
 
-// Точка входа программы: создаёт матрицы, выполняет операции и выводит время
+// Точка входа версии с double
 int main() {
     system("chcp 65001 > nul");
 
@@ -183,21 +180,21 @@ int main() {
         return 1;
     }
 
-    int** matrix1 = read_matrix(input_file, rows, cols);
+    double** matrix1 = read_matrix(input_file, rows, cols);
 
     int c = fgetc(input_file);
     if (c != '\n') {
         ungetc(c, input_file);
     }
 
-    int** matrix2 = read_matrix(input_file, rows, cols);
+    double** matrix2 = read_matrix(input_file, rows, cols);
 
     fclose(input_file);
 
-    int** sum_result = plus_matrix(matrix1, matrix2, rows, cols);
-    int** diff_result = minus_matrix(matrix1, matrix2, rows, cols);
+    double** sum_result = plus_matrix(matrix1, matrix2, rows, cols);
+    double** diff_result = minus_matrix(matrix1, matrix2, rows, cols);
 
-    int** mul_result = multiply_matrices(matrix1, matrix2, cols, rows, cols, rows);
+    double** mul_result = multiply_matrices(matrix1, matrix2, cols, rows, cols, rows);
 
     FILE* output_file = fopen("output.txt", "w");
     if (output_file == NULL) {
