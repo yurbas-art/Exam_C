@@ -3,7 +3,20 @@
 #include <time.h>
 #include <string.h>
 
-// Функция для создания файла с случайными числами
+/*
+ * Prototype 1
+ * ------------
+ * Программа демонстрирует работу с файлами и динамическими
+ * массивами. Сначала генерируются случайные числа и записываются
+ * в input.txt. Затем при чтении числа заменяются на слова
+ * (если делятся на 5 или 7) и сохраняются в output.txt.
+ * После этого из исходного набора формируется матрица и
+ * вычисляются суммы её строк и столбцов.
+ */
+
+// Функция для создания файла со случайными числами.
+// На вход принимается количество чисел, которые нужно
+// сгенерировать и записать построчно в input.txt.
 void create_input_file(int N) {
     FILE *file = fopen("input.txt", "w");
     if (file == NULL) {
@@ -13,13 +26,15 @@ void create_input_file(int N) {
 
     srand(time(NULL));
     for (int i = 0; i < N; i++) {
-        fprintf(file, "%d ", rand() % 100 + 1);  // числа от 1 до 100
+        // записываем числа от 1 до 100
+        fprintf(file, "%d ", rand() % 100 + 1);
     }
 
     fclose(file);
 }
 
-// Функция для обработки чисел и записи в output.txt
+// Читает числа из input.txt и пишет их в output.txt,
+// заменяя значения, кратные 5 или 7, на соответствующие слова.
 void process_numbers(int N) {
     FILE *input = fopen("input.txt", "r");
     FILE *output = fopen("output.txt", "w");
@@ -30,7 +45,10 @@ void process_numbers(int N) {
 
     int num;
     for (int i = 0; i < N; i++) {
+        // читаем очередное число
         fscanf(input, "%d", &num);
+
+        // проверяем кратность и выводим слово вместо числа
         if (num % 5 == 0 && num % 7 == 0) {
             fprintf(output, "PYATSEM");
         } else if (num % 5 == 0) {
@@ -46,7 +64,8 @@ void process_numbers(int N) {
     fclose(output);
 }
 
-// Функция для формирования матрицы и подсчета сумм
+// Формирует матрицу из чисел в input.txt и печатает
+// её на экран вместе с суммами строк и столбцов.
 void create_matrix_and_calculate_sums(int N, int M) {
     FILE *input = fopen("input.txt", "r");
     if (input == NULL) {
@@ -56,6 +75,7 @@ void create_matrix_and_calculate_sums(int N, int M) {
 
     int total_numbers = N;
     int cols = M;
+    // количество строк вычисляется исходя из числа элементов
     int rows = total_numbers / cols;
     if (total_numbers % cols != 0) {
         rows++;  // Если есть остаток, добавляем еще одну строку

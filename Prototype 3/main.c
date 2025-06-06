@@ -1,14 +1,21 @@
-/*Вариант 1
-1.Рассчитать количество дней до даты. (ввод даты читается из файла input.txt) 
-2.Сделать функцию создания квадратной матрицы размера m*m, заполненную случайными числами от 0 до 9. 
-3.Создавать матрицы пока не появится две одинаковой суммой всех элементов. Вывести их в файл output.txt.
-4.Замерить время работы программы*/
+/*
+ * Prototype 3
+ * ------------
+ * 1. Считывает дату из input.txt и рассчитывает,
+ *    сколько дней осталось до неё.
+ * 2. Генерирует квадратные матрицы из случайных чисел.
+ * 3. Создаёт матрицы до тех пор, пока не встретятся две
+ *    с одинаковой суммой элементов, после чего выводит
+ *    их в output.txt.
+ * 4. В конце выводится время работы программы.
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-// функция для создания матрицы
+// создаёт квадратную матрицу m x m
+// и заполняет её числами от 0 до 9
 int** generateMatrix(int m) {
     int** matrix = (int**)malloc(m * sizeof(int*));
     for (int i = 0; i < m; i++) {
@@ -20,7 +27,7 @@ int** generateMatrix(int m) {
     return matrix;
 }
 
-// функция для подсчета суммы матрицы
+// возвращает сумму всех элементов матрицы
 int sum_matrix(int** matrix, int m) {
     int sum = 0;
     for (int i = 0; i < m; i++) {
@@ -31,7 +38,7 @@ int sum_matrix(int** matrix, int m) {
     return sum;
 }
 
-// вывод матрицы в файл output.txt
+// печатает матрицу в указанный файл
 void write_matrix(int** matrix, int m, FILE *file) {
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < m; j++) {
@@ -42,7 +49,7 @@ void write_matrix(int** matrix, int m, FILE *file) {
     fprintf(file, "\n");
 }
 
-// освобождение памяти матриц
+// освобождает память, выделенную под матрицу
 void free_matrix(int** matrix, int m) {
     for (int i = 0; i < m; i++) {
         free(matrix[i]);
@@ -50,6 +57,7 @@ void free_matrix(int** matrix, int m) {
     free(matrix);
 }
 
+// точка входа программы
 int main() {
     srand(time(NULL));
     
