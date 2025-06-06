@@ -16,7 +16,7 @@ void generate_file_matrix(int rows, int cols) {
     for (int k = 0; k < 2; k++) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                fprintf(input_file, "%d ", rand() % 10 + 1);
+                fprintf(input_file, "%lf ", rand() % 10 + 1);
             }
             fprintf(input_file, "\n");
         }
@@ -28,17 +28,17 @@ void generate_file_matrix(int rows, int cols) {
     fclose(input_file);
 }
 
-int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int cols2, int rows2) {
+double** multiply_matrices(double** matrix1, double** matrix2, int cols1, int rows1, int cols2, int rows2) {
     if (cols1 != rows2) {
         return NULL;
     }
-    int** result = (int**)malloc(rows1 * sizeof(int*));
+    double** result = (double**)malloc(rows1 * sizeof(double*));
     if (result == NULL) {
         printf("Ошибка: не удалось выделить память под результат умножения.\n");
         exit(1);
     }
     for (int i = 0; i < rows1; i++) {
-        result[i] = (int*)malloc(cols2 * sizeof(int));
+        result[i] = (double*)malloc(cols2 * sizeof(double));
         if (result[i] == NULL) {
             printf("Ошибка: не удалось выделить память под строку результата [%d].\n", i);
             for (int k = 0; k < i; k++) {
@@ -57,14 +57,14 @@ int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int 
     return result;
 }
 
-int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
-    int** result = (int**)malloc(rows * sizeof(int*));
+double** plus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
+    double** result = (double**)malloc(rows * sizeof(double*));
     if (result == NULL) {
         printf("Ошибка: не удалось выделить память под результат сложения.\n");
         exit(1);
     }
     for (int i = 0; i < rows; i++) {
-        result[i] = (int*)malloc(cols * sizeof(int));
+        result[i] = (double*)malloc(cols * sizeof(double));
         if (result[i] == NULL) {
             printf("Ошибка: не удалось выделить память под строку результата [%d].\n", i);
             for (int k = 0; k < i; k++) {
@@ -80,14 +80,14 @@ int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
-int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
-    int** result = (int**)malloc(rows * sizeof(int*));
+double** minus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
+    double** result = (double**)malloc(rows * sizeof(double*));
     if (result == NULL) {
         printf("Ошибка: не удалось выделить память под результат вычитания.\n");
         exit(1);
     }
     for (int i = 0; i < rows; i++) {
-        result[i] = (int*)malloc(cols * sizeof(int));
+        result[i] = (double*)malloc(cols * sizeof(double));
         if (result[i] == NULL) {
             printf("Ошибка: не удалось выделить память под строку результата [%d].\n", i);
             for (int k = 0; k < i; k++) {
@@ -103,30 +103,30 @@ int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
-void write_matrix(FILE* output_file, int** matrix, int rows, int cols) {
+void write_matrix(FILE* output_file, double** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            fprintf(output_file, "%d ", matrix[i][j]);
+            fprintf(output_file, "%lf ", matrix[i][j]);
         }
         fprintf(output_file, "\n");
     }
 }
 
-void free_matrix(int** matrix, int rows) {
+void free_matrix(double** matrix, int rows) {
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
     }
     free(matrix);
 }
 
-int** read_matrix(FILE* input_file, int rows, int cols) {
-    int** matrix = (int**)malloc(rows * sizeof(int*));
+double** read_matrix(FILE* input_file, int rows, int cols) {
+    double** matrix = (double**)malloc(rows * sizeof(double*));
     if (matrix == NULL) {
         printf("Ошибка: не удалось выделить память под указатели строк.\n");
         exit(1);
     }
     for (int i = 0; i < rows; i++) {
-        matrix[i] = (int*)malloc(cols * sizeof(int));
+        matrix[i] = (double*)malloc(cols * sizeof(double));
         if (matrix[i] == NULL) {
             printf("Ошибка: не удалось выделить память под row %d.\n", i);
             for (int k = 0; k < i; k++) {
@@ -136,7 +136,7 @@ int** read_matrix(FILE* input_file, int rows, int cols) {
             exit(1);
         }
         for (int j = 0; j < cols; j++) {
-            if (fscanf(input_file, "%d", &matrix[i][j]) != 1) {
+            if (fscanf(input_file, "%lf", &matrix[i][j]) != 1) {
                 printf("Ошибка: недостаточно чисел в файле при чтении элемента [%d][%d].\n", i, j);
                 for (int k = 0; k <= i; k++) {
                     free(matrix[k]);
@@ -165,21 +165,21 @@ int main() {
         return 1;
     }
 
-    int** matrix1 = read_matrix(input_file, rows, cols);
+    double** matrix1 = read_matrix(input_file, rows, cols);
 
     int c = fgetc(input_file);
     if (c != '\n') {
         ungetc(c, input_file);
     }
 
-    int** matrix2 = read_matrix(input_file, rows, cols);
+    double** matrix2 = read_matrix(input_file, rows, cols);
 
     fclose(input_file);
 
-    int** sum_result = plus_matrix(matrix1, matrix2, rows, cols);
-    int** diff_result = minus_matrix(matrix1, matrix2, rows, cols);
+    double** sum_result = plus_matrix(matrix1, matrix2, rows, cols);
+    double** diff_result = minus_matrix(matrix1, matrix2, rows, cols);
 
-    int** mul_result = multiply_matrices(matrix1, matrix2, cols, rows, cols, rows);
+    double** mul_result = multiply_matrices(matrix1, matrix2, cols, rows, cols, rows);
 
     FILE* output_file = fopen("output.txt", "w");
     if (output_file == NULL) {
