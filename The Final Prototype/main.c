@@ -3,7 +3,15 @@
 #include <stdlib.h>
 #include <windows.h>
 
-// в этом файле реализованы функции сложения, вычитания и умножения матриц
+/*
+ * main.c — базовый вариант программы работы с матрицами.
+ * Генерирует две матрицы целых чисел, выполняет операции
+ * сложения, вычитания и умножения и записывает результаты
+ * в файл output.txt.
+ */
+
+// Генерирует файл input.txt, содержащий две случайные матрицы
+// Параметры rows и cols задают размерность этих матриц
 
 void generate_file_matrix(int rows, int cols) {
     FILE *input_file = fopen("input.txt", "w");
@@ -28,6 +36,8 @@ void generate_file_matrix(int rows, int cols) {
     fclose(input_file);
 }
 
+// Перемножает matrix1 (rows1 x cols1) и matrix2 (rows2 x cols2)
+// Возвращает новую матрицу размера rows1 x cols2 или NULL при несовместимости
 int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int cols2, int rows2) {
     if (cols1 != rows2) {
         return NULL;
@@ -57,6 +67,8 @@ int** multiply_matrices(int** matrix1, int** matrix2, int cols1, int rows1, int 
     return result;
 }
 
+// Сложение двух матриц одинакового размера
+// Возвращает новую матрицу с суммой
 int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     int** result = (int**)malloc(rows * sizeof(int*));
     if (result == NULL) {
@@ -80,6 +92,8 @@ int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
+// Вычитание матриц одинакового размера
+// Возвращает matrix1 - matrix2
 int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     int** result = (int**)malloc(rows * sizeof(int*));
     if (result == NULL) {
@@ -103,6 +117,7 @@ int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
+// Записывает матрицу в файл построчно
 void write_matrix(FILE* output_file, int** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -112,6 +127,7 @@ void write_matrix(FILE* output_file, int** matrix, int rows, int cols) {
     }
 }
 
+// Освобождает память, выделенную под матрицу
 void free_matrix(int** matrix, int rows) {
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
@@ -119,6 +135,7 @@ void free_matrix(int** matrix, int rows) {
     free(matrix);
 }
 
+// Считывает из файла матрицу заданного размера
 int** read_matrix(FILE* input_file, int rows, int cols) {
     int** matrix = (int**)malloc(rows * sizeof(int*));
     if (matrix == NULL) {
@@ -149,6 +166,7 @@ int** read_matrix(FILE* input_file, int rows, int cols) {
     return matrix;
 }
 
+// Точка входа программы: создаёт матрицы, выполняет операции и выводит время
 int main() {
     system("chcp 65001 > nul");
 

@@ -3,7 +3,14 @@
 #include <stdlib.h>
 #include <windows.h>
 
-// программа с вводом размера матрицы; реализованы сложение, вычитание и умножение
+/*
+ * main_double_input.c — вариант с вводом размерности матриц из консоли.
+ * Использует тип double и выполняет все основные операции
+ * над матрицами.
+ */
+
+// Генерация файла input.txt со случайными числами
+// rows и cols определяют размер создаваемых матриц
 
 void generate_file_matrix(int rows, int cols) {
     FILE *input_file = fopen("input.txt", "w");
@@ -28,6 +35,8 @@ void generate_file_matrix(int rows, int cols) {
     fclose(input_file);
 }
 
+// Умножает две матрицы вещественных чисел
+// Возвращает новую матрицу или NULL при несовместимости размеров
 double** multiply_matrices(double** matrix1, double** matrix2, int cols1, int rows1, int cols2, int rows2) {
     if (cols1 != rows2) {
         return NULL;
@@ -57,6 +66,7 @@ double** multiply_matrices(double** matrix1, double** matrix2, int cols1, int ro
     return result;
 }
 
+// Складывает две матрицы типа double
 double** plus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
     double** result = (double**)malloc(rows * sizeof(double*));
     if (result == NULL) {
@@ -80,6 +90,7 @@ double** plus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
     return result;
 }
 
+// Вычитает вторую матрицу из первой
 double** minus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
     double** result = (double**)malloc(rows * sizeof(double*));
     if (result == NULL) {
@@ -103,6 +114,7 @@ double** minus_matrix(double** matrix1, double** matrix2, int rows, int cols) {
     return result;
 }
 
+// Записывает матрицу в файл
 void write_matrix(FILE* output_file, double** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -112,6 +124,7 @@ void write_matrix(FILE* output_file, double** matrix, int rows, int cols) {
     }
 }
 
+// Освобождает выделенную память для матрицы
 void free_matrix(double** matrix, int rows) {
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
@@ -119,6 +132,7 @@ void free_matrix(double** matrix, int rows) {
     free(matrix);
 }
 
+// Считывает из файла матрицу указанного размера
 double** read_matrix(FILE* input_file, int rows, int cols) {
     double** matrix = (double**)malloc(rows * sizeof(double*));
     if (matrix == NULL) {
@@ -149,6 +163,7 @@ double** read_matrix(FILE* input_file, int rows, int cols) {
     return matrix;
 }
 
+// Точка входа с вводом размерности матриц
 int main() {
     system("chcp 65001 > nul");
 
