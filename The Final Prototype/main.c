@@ -80,6 +80,29 @@ int** plus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
     return result;
 }
 
+int** minus_matrix(int** matrix1, int** matrix2, int rows, int cols) {
+    int** result = (int**)malloc(rows * sizeof(int*));
+    if (result == NULL) {
+        printf("Ошибка: не удалось выделить память под результат вычитания.\n");
+        exit(1);
+    }
+    for (int i = 0; i < rows; i++) {
+        result[i] = (int*)malloc(cols * sizeof(int));
+        if (result[i] == NULL) {
+            printf("Ошибка: не удалось выделить память под строку результата [%d].\n", i);
+            for (int k = 0; k < i; k++) {
+                free(result[k]);
+            }
+            free(result);
+            exit(1);
+        }
+        for (int j = 0; j < cols; j++) {
+            result[i][j] = matrix1[i][j] - matrix2[i][j];
+        }
+    }
+    return result;
+}
+
 void write_matrix(FILE* output_file, int** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -154,6 +177,7 @@ int main() {
     fclose(input_file);
 
     int** sum_result = plus_matrix(matrix1, matrix2, rows, cols);
+    int** diff_result = minus_matrix(matrix1, matrix2, rows, cols);
 
     int** mul_result = multiply_matrices(matrix1, matrix2, cols, rows, cols, rows);
 
@@ -163,6 +187,7 @@ int main() {
         free_matrix(matrix1, rows);
         free_matrix(matrix2, rows);
         free_matrix(sum_result, rows);
+        free_matrix(diff_result, rows);
         if (mul_result != NULL) {
             free_matrix(mul_result, rows);
         }
@@ -171,6 +196,10 @@ int main() {
 
     fprintf(output_file, "Сумма матриц:\n");
     write_matrix(output_file, sum_result, rows, cols);
+    fprintf(output_file, "\n");
+
+    fprintf(output_file, "Разность матриц:\n");
+    write_matrix(output_file, diff_result, rows, cols);
     fprintf(output_file, "\n");
 
     if (mul_result != NULL) {
@@ -185,6 +214,7 @@ int main() {
     free_matrix(matrix1, rows);
     free_matrix(matrix2, rows);
     free_matrix(sum_result, rows);
+    free_matrix(diff_result, rows);
     if (mul_result != NULL) {
         free_matrix(mul_result, rows);
     }
