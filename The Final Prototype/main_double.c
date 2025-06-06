@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <windows.h>
+#include <locale.h>
 
 // вариант программы с двойной точностью: реализация сложения, вычитания и умножения матриц
 
@@ -150,7 +150,7 @@ double** read_matrix(FILE* input_file, int rows, int cols) {
 }
 
 int main() {
-    system("chcp 65001 > nul");
+    setlocale(LC_ALL, "");
 
     int rows, cols;
     rows = cols = 3;

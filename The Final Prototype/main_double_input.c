@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <windows.h>
+#include <locale.h>
 
 // программа с вводом размера матрицы; реализованы сложение, вычитание и умножение
 
@@ -150,7 +150,7 @@ double** read_matrix(FILE* input_file, int rows, int cols) {
 }
 
 int main() {
-    system("chcp 65001 > nul");
+    setlocale(LC_ALL, "");
 
     int rows, cols;
     printf("Введите количество строк: ");
