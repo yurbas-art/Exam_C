@@ -15,6 +15,8 @@
 | [Task 2](Task%202) | Генерация чисел, замена кратных 5 и 7 и запись результата. |
 | [Task 3(data_work)](Task%203(data_work)) | Подсчёт дней до указанной даты из файла `data.txt`. |
 | [The Final Prototype](The%20Final%20Prototype) | Итоговая версия с матричными операциями: сложение, вычитание и умножение. Сборка создаёт программы `final_int`, `final_double` и `final_double_input`. |
+| [MatrixDateTask](MatrixDateTask) | Комбинированная задача: подсчёт дней до даты, генерация двух квадратных матриц и операции над ними. |
+| [Real_Exam_Prototype](Real_Exam_Prototype) | Та же задача, но матрицы имеют тип `double`. |
 
 ## Полезные конструкции
 
@@ -27,8 +29,8 @@
 ## Как собирать
 
 Во всех каталогах с исходниками присутствуют `CMakeLists.txt`. Для финальной версии собирайте следующим образом:
-
 ```bash
+
 cd "The Final Prototype"
 cmake -B build
 cmake --build build
