@@ -15,12 +15,11 @@
 | [Task 2](Task%202) | Генерация чисел, замена кратных 5 и 7 и запись результата. |
 | [Task 3(data_work)](Task%203(data_work)) | Подсчёт дней до указанной даты из файла `data.txt`. |
 | [The Final Prototype](The%20Final%20Prototype) | Итоговая версия с матричными операциями: сложение, вычитание и умножение. Сборка создаёт программы `final_int`, `final_double` и `final_double_input`. | ve48er-codex/решить-задачу-с-датой-и-матрицами
-| [Real_Exam_Prototype_var1](Real_Exam_Prototype_var1) | Комбинированная задача: подсчёт дней до даты, генерация двух квадратных матриц и операции над ними. |
+| [Real_Exam_Prototype_var1](Real_Exam_Prototype_var1) | Экзаменационный вариант 1: подсчёт дней до даты, генерация двух квадратных матриц и операции над ними. |
 | [Real_Exam_Prototype_var1/Real_Exam_Prototype](Real_Exam_Prototype_var1/Real_Exam_Prototype) | Та же задача, но матрицы имеют тип `double`. |
 | [Real_Exam_Var2](Real_Exam_Var2) | Экзаменационный вариант 2: генерация чисел, замены "ПЯТЬ"/"СЕМЬ" и квадратная матрица. |
-| [MatrixDateTask](MatrixDateTask) | Комбинированная задача: подсчёт дней до даты, генерация двух квадратных матриц и операции над ними. |
 | [Real_Exam_Prototype](Real_Exam_Prototype) | Та же задача, но матрицы имеют тип `double`. |
- main
+ 
 
 ## Полезные конструкции
 
