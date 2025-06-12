@@ -18,7 +18,7 @@
 | [Real_Exam_Prototype_var1](Real_Exam_Prototype_var1) | Экзаменационный вариант 1: подсчёт дней до даты, генерация двух квадратных матриц и операции над ними. |
 | [Real_Exam_Prototype_var1/Real_Exam_Prototype](Real_Exam_Prototype_var1/Real_Exam_Prototype) | Та же задача, но матрицы имеют тип `double`. |
 | [Real_Exam_Var2](Real_Exam_Var2) | Экзаменационный вариант 2: генерация чисел, замены "ПЯТЬ"/"СЕМЬ" и квадратная матрица. |
-| [Real_Exam_Prototype](Real_Exam_Prototype) | Та же задача, но матрицы имеют тип `double`. |
+| [Real_Exam_Prototype_var 2/Real_Exam_Prototype](Real_Exam_Prototype_var%202/Real_Exam_Prototype) | Та же задача, но матрицы имеют тип `double`. |
  
 
 ## Полезные конструкции
